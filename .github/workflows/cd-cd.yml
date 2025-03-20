@@ -1,4 +1,4 @@
-name: CI Pipeline for Next.js
+name: CI/CD Pipeline for Next.js
 
 on:
   push:
@@ -57,7 +57,34 @@ jobs:
             echo "Build failed!"
             exit 1
           fi
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main'
+    steps:
+      # Paso 1: Checkout del código
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # Paso 9: Escanear vulnerabilidades con CodeQL
-      - name: Run CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+      # Paso 2: Configurar Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "bun"
+
+      # Paso 3: Instalar dependencias
+      - name: Install dependencies
+        run: bun install
+
+      # Paso 4: Build del proyecto
+      - name: Build project
+        run: bun run build
+
+      # Paso 5: Desplegar en Vercel
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Usa el token de Vercel
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }} # Opcional: ID de la organización
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }} # Opcional: ID del proyecto
