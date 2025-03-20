@@ -1,0 +1,55 @@
+name: CI Pipeline for Next.js
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Checkout del código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Paso 2: Configurar Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "bun"
+
+      # Paso 3: Instalar dependencias
+      - name: Install dependencies
+        run: bun install
+
+      # Paso 4: Ejecutar ESLint
+      - name: Run ESLint
+        run: bun run lint
+
+      # Paso 5: Ejecutar pruebas
+      - name: Run tests
+        run: bun test
+
+      # Paso 6: Build del proyecto
+      - name: Build project
+        run: bun run build
+
+      # Paso 7: Verificar el build
+      - name: Check build output
+        run: |
+          if [ -d ".next" ]; then
+            echo "Build successful!"
+          else
+            echo "Build failed!"
+            exit 1
+          fi
+
+      # Paso 8: Escanear vulnerabilidades con CodeQL (opcional)
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/analyze@v2

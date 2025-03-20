@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prepare": "husky install",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -21,14 +22,22 @@
     "tw-animate-css": "^1.2.4"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4.0.15",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4.0.15",
-    "tailwindcss": "^4.0.15",
     "eslint": "^9",
     "eslint-config-next": "15.2.3",
-    "@eslint/eslintrc": "^3"
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "tailwindcss": "^4.0.15",
+    "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "bun run lint",
+      "bun run format"
+    ]
   }
 }

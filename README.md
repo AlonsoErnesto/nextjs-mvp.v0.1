@@ -1,5 +1,7 @@
 # MI ADVISER - CODE
 
+![CI Status](https://github.com/MyAdviser/nextjs-mvp.v0.1/actions/workflows/ci.yml/badge.svg)
+
 CONCEPT: Mi adviser, as platform, is a app for the students with all to one.
 
 1. Steps for dev
