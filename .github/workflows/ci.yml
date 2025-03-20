@@ -17,30 +17,38 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Paso 2: Configurar Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      # Paso 2: Instalar Bun
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: 18
-          cache: "bun"
+          bun-version: latest
 
-      # Paso 3: Instalar dependencias
+        # Paso 3: Cache de dependencias
+      - name: Cache Bun dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      # Paso 4: Instalar dependencias
       - name: Install dependencies
         run: bun install
 
-      # Paso 4: Ejecutar ESLint
+      # Paso 5: Ejecutar ESLint
       - name: Run ESLint
         run: bun run lint
 
-      # Paso 5: Ejecutar pruebas
+      # Paso 6: Ejecutar pruebas
       - name: Run tests
         run: bun test
 
-      # Paso 6: Build del proyecto
+      # Paso 7: Build del proyecto
       - name: Build project
         run: bun run build
 
-      # Paso 7: Verificar el build
+      # Paso 8: Verificar el build
       - name: Check build output
         run: |
           if [ -d ".next" ]; then
@@ -50,6 +58,6 @@ jobs:
             exit 1
           fi
 
-      # Paso 8: Escanear vulnerabilidades con CodeQL (opcional)
+      # Paso 9: Escanear vulnerabilidades con CodeQL
       - name: Run CodeQL Analysis
         uses: github/codeql-action/analyze@v2
