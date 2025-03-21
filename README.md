@@ -1,6 +1,6 @@
 # MI ADVISER - CODE
 
-![CI Status](https://github.com/MyAdviser/nextjs-mvp.v0.1/actions/workflows/ci.yml/badge.svg)
+[![CI/CD Pipeline for Next.js](https://github.com/AlonsoErnesto/nextjs-mvp.v0.1/actions/workflows/cd-cd.yml/badge.svg?branch=main)](https://github.com/AlonsoErnesto/nextjs-mvp.v0.1/actions/workflows/cd-cd.yml)
 
 CONCEPT: Mi adviser, as platform, is a app for the students with all to one.
 
