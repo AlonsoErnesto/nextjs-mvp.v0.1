@@ -87,4 +87,4 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Usa el token de Vercel
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }} # Opcional: ID de la organización
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }} # Opcional: ID del proyecto
-          vercel-args: '--yes'
+          vercel-args: '--confirm'
