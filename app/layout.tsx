@@ -1,28 +1,24 @@
-import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { QueryProvider } from "@/providers/QueryProvider";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { defaultMetadata } from "@/lib/metadata";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Adviser",
-  description: "Platform for financial advisers",
-};
+export const metadata = defaultMetadata;
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${montserrat.variable} ${montserrat.variable} antialiased`}
-      >
-        {children}
+      <body className={inter.className}>
+        <ErrorBoundary>
+          <QueryProvider>{children}</QueryProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );
